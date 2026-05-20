@@ -17,20 +17,18 @@ public class ParadaApiCliente {
     private String accessToken;
 
     public ParadaResponse getLinesByParadaCodeNumber(String pcn, String line, ParadaRequest body){
+        String path = (line !=null && !line.isBlank())
+                ? "https://openapi.emtmadrid.es/v2/transport/busemtmad/stops/" + pcn + "/arrives/"+ line +"/"  //Si lines NO viene vacio se usa esta url
+                : "https://openapi.emtmadrid.es/v2/transport/busemtmad/stops/" + pcn + "/arrives//";    //Si no, esta otra
+
         return webClient
-                .post()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/v2/transport/busemtmad/stops/")
-                        .queryParam("stopId",pcn)
-                        .path("/arrives/")
-                        .queryParam("lineArrive",line)
-                        .build())
-                .header("accessToken", accessToken)
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(body)
-                .retrieve()
-                .bodyToMono(ParadaResponse.class)
-                .block()
-                ;
+                .post() //Metodo POST
+                .uri(path) // URL
+                .header("accessToken", accessToken)     //AccessToken
+                .contentType(MediaType.APPLICATION_JSON)    //Formato de body(JSON)
+                .bodyValue(body) //El objeto ParadaRequest se convierte a JSON
+                .retrieve() //Envio
+                .bodyToMono(ParadaResponse.class) //Convierte el JSON de respuesta a ParadaResponse
+                .block(); //Espera la respuesta(síncrono)
     }
 }
