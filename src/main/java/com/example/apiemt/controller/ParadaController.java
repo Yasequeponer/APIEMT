@@ -1,17 +1,21 @@
 package com.example.apiemt.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.apiemt.dto.ParadaRequest;
+import com.example.apiemt.dto.ParadaResponse;
+import com.example.apiemt.service.ParadaService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/apiemt/paradas")
+@RequiredArgsConstructor
 public class ParadaController {
 
-    @RequestMapping("/paradas")
+    private ParadaService paradaService;
 
-    @GetMapping
-    public ResponseEntity<Parada> getAll(){
-
+    @PostMapping
+    public ParadaResponse getAllLines(@RequestParam String pcn, @RequestParam String line, @RequestParam ParadaRequest body){
+        return paradaService.getLines(pcn, line, body);
     }
 
 }

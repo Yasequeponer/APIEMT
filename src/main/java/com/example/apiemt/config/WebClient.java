@@ -1,15 +1,17 @@
 package com.example.apiemt.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class WebClient {
 
-    private String url="https://openapi.emtmadrid.es";
+    @Value("${api.externa.URL}")
+    private String url;
 
     @Bean
     public org.springframework.web.reactive.function.client.WebClient webClient(){
-        return org.springframework.web.reactive.function.client.WebClient.builder().baseUrl(this.url).build();
+        return org.springframework.web.reactive.function.client.WebClient.builder().baseUrl(url).build();
     }
 }
