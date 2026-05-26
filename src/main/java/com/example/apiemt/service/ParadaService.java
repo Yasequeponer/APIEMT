@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 public class ParadaService {
 
     private final ParadaApiCliente paradaApiCliente;
-
-    public ParadaResponse getLines(String pcn, String line, ParadaRequest body){
-        return paradaApiCliente.getLinesByParadaCodeNumber(pcn ,line, body);
+    //Metodo que llama a "getLinesByParadaCodeNumber" devolverá objeto ParadaResponse
+    public ParadaResponse getLines(String pcn, ParadaRequest body){
+        return paradaApiCliente.getLinesByParadaCodeNumber(pcn, body);
     }
 }
