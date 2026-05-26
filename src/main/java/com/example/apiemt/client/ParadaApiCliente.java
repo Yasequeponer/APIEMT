@@ -16,12 +16,14 @@ public class ParadaApiCliente {
     @Value("${api.externa.accessToken}") //Accedo al accessToken ubicado en resources/application.properties
     private String accessToken;
 
-    public ParadaResponse getLinesByParadaCodeNumber(String pcn, String line, ParadaRequest body){
-        String path = (line !=null && !line.isBlank())
-                ? "https://openapi.emtmadrid.es/v2/transport/busemtmad/stops/" + pcn + "/arrives/"+ line +"/"  //Si lines NO viene vacio se usa esta url
-                : "https://openapi.emtmadrid.es/v2/transport/busemtmad/stops/" + pcn + "/arrives//";    //Si no, esta otra
+    public ParadaResponse getLinesByParadaCodeNumber(String pcn, ParadaRequest body){
+        //String path = (line !=null && !line.isBlank())
+          //      ? "/v2/transport/busemtmad/stops/" + pcn + "/arrives/"+ line +"/"  //Si lines NO viene vacio se usa esta url
+            //    : "/v2/transport/busemtmad/stops/" + pcn + "/arrives";    //Si no, esta otra
 
-        return webClient
+        String path ="/v2/transport/busemtmad/stops/" + pcn + "/arrives//";
+
+                return webClient
                 .post() //Metodo POST
                 .uri(path) // URL
                 .header("accessToken", accessToken)     //AccessToken
