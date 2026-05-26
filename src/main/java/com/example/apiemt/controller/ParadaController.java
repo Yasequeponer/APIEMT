@@ -11,11 +11,18 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ParadaController {
 
-    private ParadaService paradaService;
+    private final ParadaService paradaService;
 
-    @PostMapping
-    public ParadaResponse getAllLines(@RequestParam String pcn, @RequestParam String line, @RequestParam ParadaRequest body){
-        return paradaService.getLines(pcn, line, body);
+    @GetMapping("/arrives/{pcn}") //Endpoint
+    public ParadaResponse getAllLines(@PathVariable String pcn){ //Recibe eñ docigo de parada
+        ParadaRequest body = ParadaRequest.builder() //Creacion de body que se enviará siempre
+                .cultureInfo("Es")
+                .Text_StopRequired_YN("Y")
+                .Text_EstimationsRequired_YN("Y")
+                .Text_IncidencesRequired_YN("N")
+                .DateTime_Referenced_Incidencies_YYYYMMDD("20260526").build();
+
+        return paradaService.getLines(pcn, body);
     }
 
 }
